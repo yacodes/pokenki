@@ -1,0 +1,73 @@
+{
+  "name": "pokenki",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "watchexec --watch index.ts yarn start",
+    "start": "swc index.ts --quiet --config module.type=commonjs | node",
+    "build": "swc index.ts --config module.type=commonjs -o ./index.js",
+    "lint": "eslint .",
+    "preconfigure": "yarn build",
+    "configure": "yarn global add \"file:$PWD\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "pokenki": "./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.218",
+    "@types/glob": "^7.2.0",
+    "@types/node": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.3.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.1",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "prettier",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": [
+        "./tsconfig.json"
+      ]
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "prettier"
+    ],
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "printWidth": 120
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "lingva-scraper": "^1.0.0",
+    "sqlite3": "^5.1.1"
+  }
+}
