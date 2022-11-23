@@ -7,7 +7,7 @@ import { getTranslationInfo, getTranslationText } from 'lingva-scraper';
 const VOCABULARY_PATH = '/home/ya/Public/Devices/Poke/KOReader/settings/vocabulary_builder.sqlite3';
 
 const expandWord = (str: string): string => str.split('').join(' ');
-const replaceVowels = (str: string): string => str.replace(/(a|e|i|o|u)/g, '_');
+const replaceVowels = (str: string): string => str.replace(/(a|e|i|o|u|y)/g, '_');
 
 const db = new sqlite3.Database(VOCABULARY_PATH, sqlite3.OPEN_READONLY, (err) => {
   if (err) return console.error(err);
@@ -24,9 +24,11 @@ const db = new sqlite3.Database(VOCABULARY_PATH, sqlite3.OPEN_READONLY, (err) =>
         await getTranslationInfo('en', 'ru', source),
       ];
       if (result) {
-        console.log(`${i}/${items.length - 1}: ${source} -> ${result}`);
+        const type = info?.extraTranslations[0]?.type || 'unknown'
+        const updatedSource = type === 'verb' ? 'to ' + source : source;
+        console.log(`${i}/${items.length - 1}: ${updatedSource} -> ${result}`);
         words.push(
-          [source, result, info?.extraTranslations[0]?.type || 'unknown', replaceVowels(expandWord(source))].join(' = ')
+          [updatedSource, result, type, replaceVowels(expandWord(updatedSource))].join(' = ')
         );
       }
     }
